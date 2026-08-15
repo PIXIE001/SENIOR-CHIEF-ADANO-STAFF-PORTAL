@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SAG Staff Portal</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eaf8ff, #ffffff);
+      color: #333;
+    }
+
+    /* LOGIN PAGE */
+
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+      text-align: center;
+    }
+
+    .logo {
+      width: 95px;
+      height: 95px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: #42a5d5;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .login-container h1 {
+      color: #1675a8;
+      font-size: 25px;
+      margin-bottom: 7px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1675a8;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #1675a8;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .login-button:hover {
+      background: #105b83;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* DASHBOARD */
+
+    .dashboard {
+      min-height: 100vh;
+      display: none;
+    }
+
+    .topbar {
+      background: #1675a8;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .topbar h2 {
+      font-size: 21px;
+    }
+
+    .logout-button {
+      background: white;
+      color: #1675a8;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .welcome {
+      padding: 30px 25px 15px;
+    }
+
+    .welcome h1 {
+      color: #1675a8;
+      margin-bottom: 6px;
+    }
+
+    .welcome p {
+      color: #666;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      padding: 10px 25px 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      color: #1675a8;
+      margin-bottom: 12px;
+    }
+
+    .time {
+      font-size: 27px;
+      font-weight: bold;
+    }
+
+    .attendance {
+      text-align: center;
+    }
+
+    .attendance-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .sign-in {
+      background: #168a55;
+    }
+
+    .sign-out {
+      background: #c0392b;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #eef6fa;
+      font-size: 14px;
+    }
+
+    .message {
+      margin-top: 15px;
+      color: #c0392b;
+      font-size: 14px;
+      display: none;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      .login-container {
+        padding: 28px 22px;
+      }
+
+      .topbar {
+        padding: 15px;
+      }
+
+      .topbar h2 {
+        font-size: 17px;
+      }
+
+      .welcome {
+        padding: 25px 15px 10px;
+      }
+
+      .cards {
+        padding: 10px 15px 25px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================= -->
+  <!-- LOGIN PAGE -->
+  <!-- ========================= -->
+
+  <div class="login-page" id="loginPage">
+
+    <div class="login-container">
+
+      <div class="logo">
+        SAG
+      </div>
+
+      <h1>SAG STAFF PORTAL</h1>
+
+      <p class="subtitle">
+        Senior Chief Adano Girls Senior School
+      </p>
+
+      <div class="input-group">
+        <label for="staffId">Staff ID</label>
+
+        <input
+          type="text"
+          id="staffId"
+          placeholder="Enter Staff ID"
+        >
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter Password"
+        >
+      </div>
+
+      <button class="login-button" onclick="login()">
+        LOGIN
+      </button>
+
+      <p class="message" id="loginMessage"></p>
+
+      <p class="footer">
+        Staff Management & Attendance System
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- STAFF DASHBOARD -->
+  <!-- ========================= -->
+
+  <div class="dashboard" id="dashboard">
+
+    <div class="topbar">
+
+      <h2>SAG STAFF PORTAL</h2>
+
+      <button
+        class="logout-button"
+        onclick="logout()"
+      >
+        LOGOUT
+      </button>
+
+    </div>
+
+
+    <div class="welcome">
+
+      <h1 id="welcomeMessage">
+        Welcome
+      </h1>
+
+      <p>
+        Senior Chief Adano Girls Senior School
+      </p>
+
+    </div>
+
+
+    <div class="cards">
+
+      <!-- DATE -->
+
+      <div class="card">
+
+        <h3>📅 Today's Date</h3>
+
+        <p id="date">
+          Loading...
+        </p>
+
+      </div>
+
+
+      <!-- CLOCK -->
+
+      <div class="card">
+
+        <h3>🕐 Current Time</h3>
+
+        <p
+          class="time"
+          id="clock"
+        >
+          Loading...
+        </p>
+
+      </div>
+
+
+      <!-- ATTENDANCE -->
+
+      <div class="card attendance">
+
+        <h3>Attendance</h3>
+
+        <button
+          class="attendance-button sign-in"
+          onclick="signIn()"
+        >
+          🟢 SIGN IN
+        </button>
+
+        <button
+          class="attendance-button sign-out"
+          onclick="signOut()"
+        >
+          🔴 SIGN OUT
+        </button>
+
+        <div
+          class="status"
+          id="status"
+        >
+          Status: Not signed in
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
+  <script>
+
+    let currentStaffId = "";
+
+    let clockInterval;
+
+
+    /* LOGIN */
+
+    function login() {
+
+      const staffId =
+        document.getElementById("staffId").value.trim();
+
+      const password =
+        document.getElementById("password").value.trim();
+
+      const message =
+        document.getElementById("loginMessage");
+
+
+      if (staffId === "" || password === "") {
+
+        message.textContent =
+          "Please enter your Staff ID and Password.";
+
+        message.style.display = "block";
+
+        return;
+      }
+
+
+      /*
+        TEST LOGIN
+
+        This is ONLY for testing the interface.
+        We will replace this with secure
+        database authentication later.
+      */
+
+      currentStaffId = staffId;
+
+
+      document.getElementById("loginPage").style.display =
+        "none";
+
+      document.getElementById("dashboard").style.display =
+        "block";
+
+
+      document.getElementById("welcomeMessage").textContent =
+        "Welcome, Staff " + currentStaffId;
+
+
+      updateDateAndClock();
+
+
+      clockInterval =
+        setInterval(updateDateAndClock, 1000);
+
+    }
+
+
+    /* DATE AND CLOCK */
+
+    function updateDateAndClock() {
+
+      const now = new Date();
+
+
+      const date =
+        document.getElementById("date");
+
+      const clock =
+        document.getElementById("clock");
+
+
+      if (date) {
+
+        date.textContent =
+          now.toLocaleDateString(
+            "en-KE",
+            {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            }
+          );
+
+      }
+
+
+      if (clock) {
+
+        clock.textContent =
+          now.toLocaleTimeString(
+            "en-KE"
+          );
+
+      }
+
+    }
+
+
+    /* STAFF SIGN IN */
+
+    function signIn() {
+
+      const now = new Date();
+
+      const status =
+        document.getElementById("status");
+
+
+      status.textContent =
+        "Status: Signed in at " +
+        now.toLocaleTimeString("en-KE");
+
+
+      status.style.background =
+        "#e8f7ee";
+
+    }
+
+
+    /* STAFF SIGN OUT */
+
+    function signOut() {
+
+      const now = new Date();
+
+      const status =
+        document.getElementById("status");
+
+
+      status.textContent =
+        "Status: Signed out at " +
+        now.toLocaleTimeString("en-KE");
+
+
+      status.style.background =
+        "#fdecea";
+
+    }
+
+
+    /* LOGOUT */
+
+    function logout() {
+
+      clearInterval(clockInterval);
+
+
+      document.getElementById("dashboard").style.display =
+        "none";
+
+      document.getElementById("loginPage").style.display =
+        "flex";
+
+
+      document.getElementById("staffId").value =
+        "";
+
+      document.getElementById("password").value =
+        "";
+
+      document.getElementById("status").textContent =
+        "Status: Not signed in";
+
+      document.getElementById("status").style.background =
+        "#eef6fa";
+
+
+      currentStaffId = "";
+
+    }
+
+  </script>
+
+</body>
+</html>
