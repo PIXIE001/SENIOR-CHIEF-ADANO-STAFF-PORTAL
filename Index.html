@@ -3,986 +3,2371 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAG Staff Management Portal</title>
+<meta name="theme-color" content="#1689e5">
+
+<title>SAG Staff Attendance Portal</title>
 
 <style>
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    background: #f3f8fa;
-    color: #263238;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f9fd;
+  color: #17324d;
 }
 
-button {
-    cursor: pointer;
+button,
+input,
+select {
+  font: inherit;
 }
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
-/* ================= LOGIN ================= */
+/* LOGIN */
 
-.login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #dff5ff, #ffffff);
+#loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #e7f5ff, #ffffff);
 }
 
-.login-box {
-    width: 100%;
-    max-width: 440px;
-    background: white;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 35px rgba(0,0,0,.12);
-    text-align: center;
+.loginBox {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0, 80, 140, 0.12);
+  text-align: center;
 }
 
-.school-logo {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 18px;
-    border-radius: 50%;
-    background: #168aad;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    font-weight: bold;
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #1689e5;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 25px;
+  font-weight: bold;
+  border: 5px solid #d9efff;
 }
 
-/* Replace the placeholder above with the actual school logo later. */
-
-.login-box h1 {
-    color: #086788;
-    font-size: 24px;
-    margin-bottom: 8px;
+.loginBox h1 {
+  color: #075da8;
+  margin-bottom: 5px;
+  font-size: 24px;
 }
 
-.login-box p {
-    color: #667;
-    margin-bottom: 25px;
+.subtitle {
+  color: #718096;
+  margin-bottom: 25px;
 }
 
-.input {
-    width: 100%;
-    padding: 14px;
-    margin: 8px 0;
-    border: 1px solid #ccd6da;
-    border-radius: 9px;
-    font-size: 16px;
+.loginBox input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #d5e5f0;
+  border-radius: 10px;
+  outline: none;
 }
 
-.primary-btn {
-    width: 100%;
-    padding: 14px;
-    border: 0;
-    border-radius: 9px;
-    background: #168aad;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
+.loginBox input:focus {
+  border-color: #1689e5;
 }
 
-.primary-btn:hover {
-    background: #086788;
+#loginButton {
+  width: 100%;
+  padding: 14px;
+  background: #1689e5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.error {
-    color: #c62828 !important;
-    margin-top: 12px;
+#loginButton:hover {
+  background: #075da8;
 }
 
-.demo-box {
-    margin-top: 20px;
-    padding: 12px;
-    background: #edf8fc;
-    border-radius: 8px;
-    font-size: 13px;
-    color: #555;
+#errorMessage {
+  color: #dc2626;
+  margin-top: 15px;
+  font-size: 14px;
 }
 
-/* ================= APP ================= */
+/* HEADER */
 
-.app {
-    min-height: 100vh;
+header {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #dce8f2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.topbar {
-    height: 70px;
-    background: #086788;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 25px;
+.schoolName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.topbar h2 {
-    font-size: 20px;
+.smallLogo {
+  width: 45px;
+  height: 45px;
+  font-size: 14px;
+  margin: 0;
+  border-width: 3px;
 }
 
-.user-area {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.schoolName strong {
+  color: #075da8;
+  display: block;
 }
 
-.logout {
-    background: white;
-    color: #086788;
-    border: 0;
-    padding: 9px 15px;
-    border-radius: 7px;
-    font-weight: bold;
+.schoolName small {
+  color: #718096;
 }
+
+#logoutButton {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* LAYOUT */
 
 .layout {
-    display: flex;
-    min-height: calc(100vh - 70px);
+  display: flex;
+  min-height: calc(100vh - 70px);
 }
 
 .sidebar {
-    width: 235px;
-    background: white;
-    border-right: 1px solid #ddd;
-    padding: 20px 10px;
+  width: 220px;
+  background: white;
+  border-right: 1px solid #dce8f2;
+  padding: 15px 10px;
 }
 
-.nav-btn {
-    width: 100%;
-    text-align: left;
-    border: 0;
-    background: transparent;
-    padding: 13px;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    font-size: 15px;
+.navButton {
+  width: 100%;
+  display: block;
+  padding: 13px;
+  margin-bottom: 5px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  border-radius: 9px;
+  color: #526b80;
+  cursor: pointer;
 }
 
-.nav-btn:hover,
-.nav-btn.active {
-    background: #e5f5fa;
-    color: #086788;
-    font-weight: bold;
+.navButton:hover,
+.navButton.active {
+  background: #eaf6ff;
+  color: #075da8;
+  font-weight: bold;
 }
 
 .content {
-    flex: 1;
-    padding: 25px;
+  flex: 1;
+  padding: 25px;
 }
 
 .page {
-    display: none;
+  display: none;
 }
 
 .page.active {
-    display: block;
+  display: block;
 }
 
-.page-title {
-    margin-bottom: 20px;
+.title h1 {
+  margin: 0;
+  color: #075da8;
 }
 
-.page-title h1 {
-    color: #086788;
-    margin-bottom: 5px;
+.title p {
+  color: #718096;
 }
 
-.page-title p {
-    color: #68777d;
-}
+/* CARDS */
 
-/* ================= CARDS ================= */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 18px;
-    margin-bottom: 22px;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 20px 0;
 }
 
 .card {
-    background: white;
-    padding: 22px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+  background: white;
+  padding: 20px;
+  border: 1px solid #dce8f2;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 80, 140, 0.06);
 }
 
-.card h3 {
-    color: #086788;
-    margin-bottom: 10px;
+.card span {
+  color: #718096;
+  font-size: 13px;
 }
 
-.big-number {
-    font-size: 30px;
-    font-weight: bold;
+.card h2 {
+  color: #075da8;
+  margin-bottom: 0;
 }
 
-/* ================= PANELS ================= */
+/* ATTENDANCE */
 
-.panel {
-    background: white;
-    padding: 22px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.06);
-    margin-bottom: 20px;
+.attendanceCard {
+  background: white;
+  border: 1px solid #dce8f2;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0, 80, 140, 0.06);
 }
 
-.panel h2 {
-    color: #086788;
-    margin-bottom: 18px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 12px;
-    border-bottom: 1px solid #e7ecef;
-    text-align: left;
-}
-
-th {
-    background: #eaf6fa;
-    color: #086788;
+.attendanceCard h2 {
+  color: #075da8;
 }
 
 .status {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: bold;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 10px 0 20px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.neutral {
+  background: #edf2f7;
+  color: #526b80;
 }
 
 .pending {
-    background: #fff3cd;
-    color: #856404;
+  background: #fef3c7;
+  color: #a16207;
 }
 
 .approved {
-    background: #d4edda;
-    color: #155724;
+  background: #dcfce7;
+  color: #15803d;
 }
 
 .rejected {
-    background: #f8d7da;
-    color: #721c24;
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
-.not-attended {
-    background: #eeeeee;
-    color: #444;
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* ================= BUTTONS ================= */
-
-.small-btn {
-    border: 0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-weight: bold;
-    margin: 2px;
+.actionButton {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 9px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.approve-btn {
-    background: #2e7d32;
-    color: white;
+.checkIn {
+  background: #16a34a;
 }
 
-.reject-btn {
-    background: #c62828;
-    color: white;
+.checkOut {
+  background: #dc2626;
 }
 
-.action-btn {
-    background: #168aad;
-    color: white;
+.actionButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-/* ================= ATTENDANCE ================= */
+/* TABLE */
 
-.attendance-actions {
+.tableBox {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #dce8f2;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th {
+  background: #eaf6ff;
+  color: #075da8;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.primary {
+  background: #1689e5;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.filter input,
+.filter select {
+  padding: 10px;
+  border: 1px solid #dce8f2;
+  border-radius: 8px;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sidebar {
+    width: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  header {
+    padding: 0 10px;
+  }
+
+  .schoolName small {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+    padding: 4px;
+    z-index: 20;
+  }
 
-.attendance-actions button {
-    padding: 13px 20px;
-    border: 0;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-}
+  .navButton {
+    text-align: center;
+    font-size: 11px;
+    margin: 0;
+    padding: 8px 3px;
+  }
 
-.sign-in {
-    background: #2e7d32;
-}
+  .content {
+    padding: 18px 15px 85px;
+  }
 
-.sign-out {
-    background: #c62828;
-}
+  .stats {
+    gap: 8px;
+  }
 
-.location-box {
-    background: #f3f8fa;
+  .card {
     padding: 15px;
-    border-radius: 9px;
-    margin-top: 15px;
-}
-
-/* ================= PROFILE ================= */
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-}
-
-.profile-item {
-    background: #f5fafc;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.profile-item strong {
-    display: block;
-    color: #086788;
-    margin-bottom: 5px;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width: 800px) {
-
-    .layout {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        display: flex;
-        overflow-x: auto;
-    }
-
-    .nav-btn {
-        min-width: 130px;
-        text-align: center;
-    }
-
-    .content {
-        padding: 15px;
-    }
-
-    .topbar {
-        padding: 0 15px;
-    }
-
-    .topbar h2 {
-        font-size: 16px;
-    }
-
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================================================= -->
 <!-- LOGIN -->
-<!-- ================================================= -->
 
-<div id="loginScreen" class="login-screen">
+<div id="loginPage">
 
-    <div class="login-box">
+  <div class="loginBox">
 
-        <div class="school-logo">
-            SAG
-        </div>
-
-        <h1>SAG STAFF PORTAL</h1>
-
-        <p>
-            Senior Chief Adano Girls Senior School
-        </p>
-
-        <input
-            id="loginCode"
-            class="input"
-            type="text"
-            placeholder="School Staff Code"
-        >
-
-        <input
-            id="loginPassword"
-            class="input"
-            type="password"
-            placeholder="Password"
-        >
-
-        <button
-            class="primary-btn"
-            onclick="login()"
-        >
-            LOGIN
-        </button>
-
-        <p
-            id="loginError"
-            class="error hidden"
-        ></p>
-
-        <div class="demo-box">
-            <strong>V1 DEMO ACCOUNTS</strong><br><br>
-
-            Admin: ADMIN001 / ADMIN2026<br>
-            Secretary: SEC001 / SEC2026<br>
-            Deputy: DEP001 / DEP2026<br>
-            Teacher: TCH001 / TCH2026<br>
-            Principal: PRIN001 / PRIN2026
-        </div>
-
+    <div class="logo">
+      SAG
     </div>
+
+    <h1>Senior Chief Adano Girls</h1>
+
+    <p class="subtitle">
+      Staff Attendance Portal
+    </p>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Staff Email"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
+
+    <button id="loginButton">
+      Login
+    </button>
+
+    <p id="errorMessage"></p>
+
+  </div>
 
 </div>
 
 
-<!-- ================================================= -->
-<!-- APPLICATION -->
-<!-- ================================================= -->
+<!-- PORTAL -->
 
-<div id="app" class="app hidden">
+<div id="portal" class="hidden">
 
-    <header class="topbar">
+<header>
 
-        <h2>SAG STAFF MANAGEMENT PORTAL</h2>
+  <div class="schoolName">
 
-        <div class="user-area">
+    <div class="logo smallLogo">
+      SAG
+    </div>
 
-            <span id="currentUser"></span>
+    <div>
+      <strong>SAG Staff Portal</strong>
+      <small>Senior Chief Adano Girls</small>
+    </div>
 
-            <button
-                class="logout"
-                onclick="logout()"
-            >
-                Logout
-            </button>
+  </div>
 
-        </div>
+  <div>
 
-    </header>
+    <span id="userEmail"></span>
 
+    <button id="logoutButton">
+      Logout
+    </button>
 
-    <div class="layout">
+  </div>
 
-        <!-- NAVIGATION -->
+</header>
 
-        <aside class="sidebar" id="sidebar">
 
-        </aside>
+<div class="layout">
 
+<aside class="sidebar">
 
-        <!-- MAIN CONTENT -->
+  <button
+    class="navButton active"
+    data-page="dashboard">
+    🏠 Dashboard
+  </button>
 
-        <main class="content">
+  <button
+    class="navButton"
+    data-page="attendance">
+    🕒 Attendance
+  </button>
 
+  <button
+    class="navButton"
+    data-page="history">
+    📅 History
+  </button>
 
-            <!-- ================= DASHBOARD ================= -->
+  <button
+    id="adminNav"
+    class="navButton hidden"
+    data-page="admin">
+    👨‍💼 Admin
+  </button>
 
-            <section
-                id="dashboardPage"
-                class="page active"
-            >
+</aside>
 
-                <div class="page-title">
 
-                    <h1 id="dashboardTitle">
-                        Dashboard
-                    </h1>
+<main class="content">
 
-                    <p>
-                        Senior Chief Adano Girls Senior School
-                    </p>
 
-                </div>
+<!-- DASHBOARD -->
 
+<section id="dashboard" class="page active">
 
-                <div class="cards">
+<div class="title">
 
-                    <div class="card">
+<h1 id="welcome">
+Welcome
+</h1>
 
-                        <h3>Staff</h3>
+<p id="dateText"></p>
 
-                        <div class="big-number">
-                            25
-                        </div>
+</div>
 
-                    </div>
 
+<div class="stats">
 
-                    <div class="card">
+<div class="card">
 
-                        <h3>Present Today</h3>
+<span>
+Today's Status
+</span>
 
-                        <div class="big-number">
-                            22
-                        </div>
+<h2 id="todayStatus">
+—
+</h2>
 
-                    </div>
+</div>
 
 
-                    <div class="card">
+<div class="card">
 
-                        <h3>Pending Approval</h3>
+<span>
+Check In
+</span>
 
-                        <div
-                            id="pendingCount"
-                            class="big-number"
-                        >
-                            2
-                        </div>
+<h2 id="todayIn">
+—
+</h2>
 
-                    </div>
+</div>
 
 
-                    <div class="card">
+<div class="card">
 
-                        <h3>Lessons Today</h3>
+<span>
+Check Out
+</span>
 
-                        <div class="big-number">
-                            48
-                        </div>
+<h2 id="todayOut">
+—
+</h2>
 
-                    </div>
+</div>
 
-                </div>
 
+<div class="card">
 
-                <div class="panel">
+<span>
+Approved Days
+</span>
 
-                    <h2>System Information</h2>
+<h2 id="approvedDays">
+0
+</h2>
 
-                    <p>
-                        Your role determines which information
-                        and actions are available to you.
-                    </p>
+</div>
 
-                </div>
+</div>
 
-            </section>
 
+<div class="attendanceCard">
 
-            <!-- ================= ATTENDANCE ================= -->
+<h2>
+Today's Attendance
+</h2>
 
-            <section
-                id="attendancePage"
-                class="page"
-            >
+<p>
+You must be within 500 metres of the school and have location enabled.
+</p>
 
-                <div class="page-title">
+<div
+id="dashboardStatus"
+class="status neutral">
+Not checked in
+</div>
 
-                    <h1>Weekly School Attendance</h1>
+<div class="actions">
 
-                    <p>
-                        Attendance records and time in/out
-                    </p>
+<button
+id="checkIn1"
+class="actionButton checkIn">
+✓ Check In
+</button>
 
-                </div>
+<button
+id="checkOut1"
+class="actionButton checkOut"
+disabled>
+✓ Check Out
+</button>
 
+</div>
 
-                <div class="panel">
+</div>
 
-                    <h2>Today's Attendance</h2>
+</section>
 
-                    <div class="attendance-actions">
 
-                        <button
-                            class="sign-in"
-                            onclick="submitAttendance('IN')"
-                        >
-                            SIGN IN
-                        </button>
+<!-- ATTENDANCE -->
 
-                        <button
-                            class="sign-out"
-                            onclick="submitAttendance('OUT')"
-                        >
-                            SIGN OUT
-                        </button>
+<section id="attendance" class="page">
 
-                    </div>
+<div class="title">
 
+<h1>Attendance</h1>
 
-                    <div class="location-box">
+<p>
+Record your arrival and departure.
+</p>
 
-                        📍 Location verification:
-                        <strong id="locationStatus">
-                            Not checked
-                        </strong>
+</div>
 
-                        <br><br>
 
-                        Allowed school radius:
-                        <strong>500 metres</strong>
+<div class="attendanceCard">
 
-                    </div>
+<h2>
+Attendance Control
+</h2>
 
-                </div>
+<div
+id="attendanceStatus"
+class="status neutral">
+Not checked in
+</div>
 
+<div class="actions">
 
-                <div class="panel">
+<button
+id="checkIn2"
+class="actionButton checkIn">
+✓ Check In
+</button>
 
-                    <h2>Weekly Record</h2>
+<button
+id="checkOut2"
+class="actionButton checkOut"
+disabled>
+✓ Check Out
+</button>
 
-                    <table>
+</div>
 
-                        <thead>
+</div>
 
-                            <tr>
-                                <th>Date</th>
-                                <th>Time In</th>
-                                <th>Time Out</th>
-                                <th>Status</th>
-                                <th>Approval</th>
-                            </tr>
+</section>
 
-                        </thead>
 
-                        <tbody id="weeklyAttendance">
+<!-- HISTORY -->
 
-                        </tbody>
+<section id="history" class="page">
 
-                    </table>
+<div class="title">
 
-                </div>
+<h1>
+My Attendance History
+</h1>
 
-            </section>
+<p>
+Your attendance records.
+</p>
 
+</div>
 
-            <!-- ================= APPROVALS ================= -->
 
-            <section
-                id="approvalPage"
-                class="page"
-            >
+<div class="tableBox">
 
-                <div class="page-title">
+<div class="filter">
 
-                    <h1>Attendance Approvals</h1>
+<input
+id="dateFilter"
+type="date"
+>
 
-                    <p>
-                        Review staff attendance submissions
-                    </p>
+<button
+id="refreshHistory"
+class="primary">
+Refresh
+</button>
 
-                </div>
+</div>
 
 
-                <div class="panel">
+<table>
 
-                    <table>
+<thead>
 
-                        <thead>
+<tr>
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+<th>Status</th>
+</tr>
 
-                            <tr>
-                                <th>Staff Code</th>
-                                <th>Date</th>
-                                <th>Time In</th>
-                                <th>Time Out</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
+</thead>
 
-                        </thead>
+<tbody id="historyBody">
 
-                        <tbody id="approvalTable">
+<tr>
+<td colspan="4">
+Loading...
+</td>
+</tr>
 
-                            <tr>
+</tbody>
 
-                                <td>TCH001</td>
-                                <td>Today</td>
-                                <td>7:35 AM</td>
-                                <td>4:05 PM</td>
+</table>
 
-                                <td>
-                                    <span class="status pending">
-                                        Pending
-                                    </span>
-                                </td>
+</div>
 
-                                <td>
+</section>
 
-                                    <button
-                                        class="small-btn approve-btn"
-                                        onclick="approveRecord(this)"
-                                    >
-                                        Approve
-                                    </button>
 
-                                    <button
-                                        class="small-btn reject-btn"
-                                        onclick="rejectRecord(this)"
-                                    >
-                                        Reject
-                                    </button>
+<!-- ADMIN -->
 
-                                </td>
+<section id="admin" class="page">
 
-                            </tr>
+<div class="title">
 
-                        </tbody>
+<h1>
+Administration
+</h1>
 
-                    </table>
+<p>
+Attendance approval centre.
+</p>
 
-                </div>
+</div>
 
-            </section>
 
+<div class="stats">
 
-            <!-- ================= LESSONS ================= -->
+<div class="card">
 
-            <section
-                id="lessonPage"
-                class="page"
-            >
+<span>Total</span>
 
-                <div class="page-title">
+<h2 id="totalRecords">
+0
+</h2>
 
-                    <h1>Lesson Attendance</h1>
+</div>
 
-                    <p>
-                        Lesson attendance and automatic timing
-                    </p>
+<div class="card">
 
-                </div>
+<span>Pending</span>
 
+<h2 id="pendingRecords">
+0
+</h2>
 
-                <div class="cards">
+</div>
 
-                    <div class="card">
+<div class="card">
 
-                        <h3>Total Lessons</h3>
+<span>Approved</span>
 
-                        <div class="big-number">
-                            25
-                        </div>
+<h2 id="approvedRecords">
+0
+</h2>
 
-                    </div>
+</div>
 
-                    <div class="card">
+<div class="card">
 
-                        <h3>Lessons Attended</h3>
+<span>Rejected</span>
 
-                        <div class="big-number">
-                            22
-                        </div>
+<h2 id="rejectedRecords">
+0
+</h2>
 
-                    </div>
+</div>
 
-                    <div class="card">
+</div>
 
-                        <h3>Lessons Not Attended</h3>
 
-                        <div class="big-number">
-                            3
-                        </div>
+<div class="tableBox">
 
-                    </div>
+<div class="filter">
 
-                </div>
+<input
+id="adminSearch"
+placeholder="Search teacher"
+>
 
+<select id="statusFilter">
 
-                <div class="panel">
+<option value="all">
+All
+</option>
 
-                    <h2>Lesson Records</h2>
+<option value="pending">
+Pending
+</option>
 
-                    <table>
+<option value="approved">
+Approved
+</option>
 
-                        <thead>
+<option value="rejected">
+Rejected
+</option>
 
-                            <tr>
-                                <th>Teacher</th>
-                                <th>Subject</th>
-                                <th>Class</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                            </tr>
+</select>
 
-                        </thead>
+<button
+id="refreshAdmin"
+class="primary">
+Refresh
+</button>
 
-                        <tbody>
+</div>
 
-                            <tr>
-                                <td>TCH001</td>
-                                <td>Mathematics</td>
-                                <td>Form 1A</td>
-                                <td>8:00 AM</td>
-                                <td>
-                                    <span class="status approved">
-                                        Attended
-                                    </span>
-                                </td>
-                            </tr>
 
-                        </tbody>
+<table>
 
-                    </table>
+<thead>
 
-                </div>
+<tr>
+<th>Teacher</th>
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
 
-            </section>
+</thead>
 
+<tbody id="adminBody">
 
-            <!-- ================= STAFF ================= -->
+<tr>
+<td colspan="6">
+Loading...
+</td>
+</tr>
 
-            <section
-                id="staffPage"
-                class="page"
-            >
+</tbody>
 
-                <div class="page-title">
+</table>
 
-                    <h1>Staff Management</h1>
+</div>
 
-                    <p>
-                        Staff profiles, subjects and classes
-                    </p>
+</section>
 
-                </div>
 
+</main>
 
-                <div class="panel">
+</div>
 
-                    <table>
+</div>
 
-                        <thead>
 
-                            <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Subjects</th>
-                                <th>Classes</th>
-                                <th>Status</th>
-                            </tr>
+<script type="module">
 
-                        </thead>
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
-                        <tbody>
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-                            <tr>
-                                <td>TCH001</td>
-                                <td>Teacher 1</td>
-                                <td>Teacher</td>
-                                <td>Mathematics</td>
-                                <td>Form 1A, Form 2B</td>
-                                <td>Active</td>
-                            </tr>
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  serverTimestamp,
+  getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-                            <tr>
-                                <td>TCH002</td>
-                                <td>Teacher 2</td>
-                                <td>Teacher</td>
-                                <td>English</td>
-                                <td>Form 1B, Form 3A</td>
-                                <td>Active</td>
-                            </tr>
 
-                        </tbody>
+/* FIREBASE */
 
-                    </table>
+const firebaseConfig = {
 
-                </div>
+  apiKey:
+    "AIzaSyCm6y8kw9B1euC7xdtRbbG9g3QDsmkHEJE",
 
-            </section>
+  authDomain:
+    "scagss-staff-attendance.firebaseapp.com",
 
+  projectId:
+    "scagss-staff-attendance",
 
-            <!-- ================= PROFILE ================= -->
+  storageBucket:
+    "scagss-staff-attendance.firebasestorage.app",
 
-            <section
-                id="profilePage"
-                class="page"
-            >
+  messagingSenderId:
+    "314260673285",
 
-                <div class="page-title">
+  appId:
+    "1:314260673285:web:4629339a5ba4c290475d6c",
 
-                    <h1>My Profile</h1>
+  measurementId:
+    "G-2PDNEFT723"
 
-                    <p>
-                        Staff information
-                    </p>
+};
 
-                </div>
 
+const app =
+  initializeApp(firebaseConfig);
 
-                <div class="panel">
+const auth =
+  getAuth(app);
 
-                    <div class="profile-grid">
+const db =
+  getFirestore(app);
 
-                        <div class="profile-item">
 
-                            <strong>Staff Code</strong>
+/* SCHOOL LOCATION */
 
-                            <span id="profileCode">
-                                -
-                            </span>
+const SCHOOL_LATITUDE =
+  1.7352781;
 
-                        </div>
+const SCHOOL_LONGITUDE =
+  40.0393014;
 
+const MAX_DISTANCE =
+  500;
 
-                        <div class="profile-item">
 
-                            <strong>Name</strong>
+let currentUser = null;
+let currentProfile = null;
 
-                            <span id="profileName">
-                                -
-                            </span>
 
-                        </div>
+/* HELPERS */
 
+function getToday() {
 
-                        <div class="profile-item">
+  const d = new Date();
 
-                            <strong>Role</strong>
+  return (
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(d.getDate()).padStart(2, "0")
+  );
 
-                            <span id="profileRole">
-                                -
-                            </span>
+}
 
-                        </div>
 
+function formatTime(value) {
 
-                        <div class="profile-item">
+  if (!value) {
+    return "—";
+  }
 
-                            <strong>Subjects</strong>
+  const date =
+    value.toDate
+      ? value.toDate()
+      : new Date(value);
 
-                            <span id="profileSubjects">
-                                -
-                            </span>
+  return date.toLocaleTimeString(
+    "en-KE",
+    {
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  );
 
-                        </div>
+}
 
 
-                        <div class="profile-item">
+/* DISTANCE */
 
-                            <strong>Classes</strong>
+function calculateDistance(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+) {
 
-                            <span id="profileClasses">
-                                -
-                            </span>
+  const R = 6371000;
 
-                        </div>
+  const dLat =
+    (lat2 - lat1) *
+    Math.PI / 180;
+
+  const dLon =
+    (lon2 - lon1) *
+    Math.PI / 180;
+
+  const a =
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2) +
+
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  return (
+    R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    )
+  );
+
+}
+
+
+/* GPS */
+
+function getSchoolLocation() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (!navigator.geolocation) {
+
+        reject(
+          "GPS is not supported on this device."
+        );
+
+        return;
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+          const distance =
+            calculateDistance(
+              position.coords.latitude,
+              position.coords.longitude,
+              SCHOOL_LATITUDE,
+              SCHOOL_LONGITUDE
+            );
+
+
+          if (distance > MAX_DISTANCE) {
+
+            reject(
+              "You are " +
+              Math.round(distance) +
+              " metres from school. " +
+              "Attendance is only allowed within " +
+              MAX_DISTANCE +
+              " metres."
+            );
+
+            return;
+          }
+
+
+          resolve({
+            latitude:
+              position.coords.latitude,
+
+            longitude:
+              position.coords.longitude,
+
+            accuracy:
+              position.coords.accuracy,
+
+            distance:
+              Math.round(distance)
+          });
+
+        },
+
+
+        error => {
+
+          if (error.code === 1) {
+
+            reject(
+              "Location permission was denied. Enable location access and try again."
+            );
+
+          } else {
+
+            reject(
+              "Unable to obtain your location."
+            );
+
+          }
+
+        },
+
+
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 0
+        }
+
+      );
+
+    }
+  );
+
+}
+
+
+/* USER PROFILE */
+
+async function loadProfile(user) {
+
+  const profileRef =
+    doc(
+      db,
+      "users",
+      user.uid
+    );
+
+  const profileSnap =
+    await getDoc(profileRef);
+
+
+  if (!profileSnap.exists()) {
+
+    throw new Error(
+      "No staff profile exists for this account."
+    );
+
+  }
+
+
+  return profileSnap.data();
+
+}
+
+
+/* TODAY RECORD */
+
+async function getTodayRecord() {
+
+  const q =
+    query(
+      collection(
+        db,
+        "attendance"
+      ),
+
+      where(
+        "teacherId",
+        "==",
+        currentUser.uid
+      ),
+
+      where(
+        "date",
+        "==",
+        getToday()
+      )
+    );
+
+
+  const snapshot =
+    await getDocs(q);
+
+
+  if (snapshot.empty) {
+
+    return null;
+
+  }
+
+
+  return snapshot.docs[0];
+
+}
+
+
+/* REFRESH DASHBOARD */
+
+async function refreshDashboard() {
+
+  const record =
+    await getTodayRecord();
+
+
+  if (!record) {
+
+    document.getElementById(
+      "todayStatus"
+    ).textContent =
+      "Not checked in";
+
+    document.getElementById(
+      "todayIn"
+    ).textContent =
+      "—";
+
+    document.getElementById(
+      "todayOut"
+    ).textContent =
+      "—";
+
+    document.getElementById(
+      "dashboardStatus"
+    ).textContent =
+      "Not checked in";
+
+    document.getElementById(
+      "attendanceStatus"
+    ).textContent =
+      "Not checked in";
+
+    document.getElementById(
+      "checkIn1"
+    ).disabled = false;
+
+    document.getElementById(
+      "checkIn2"
+    ).disabled = false;
+
+    document.getElementById(
+      "checkOut1"
+    ).disabled = true;
+
+    document.getElementById(
+      "checkOut2"
+    ).disabled = true;
+
+    return;
+  }
+
+
+  const data =
+    record.data();
+
+
+  document.getElementById(
+    "todayStatus"
+  ).textContent =
+    data.status || "pending";
+
+
+  document.getElementById(
+    "todayIn"
+  ).textContent =
+    formatTime(data.timeIn);
+
+
+  document.getElementById(
+    "todayOut"
+  ).textContent =
+    formatTime(data.timeOut);
+
+
+  document.getElementById(
+    "dashboardStatus"
+  ).textContent =
+    data.status || "pending";
+
+
+  document.getElementById(
+    "attendanceStatus"
+  ).textContent =
+    data.status || "pending";
+
+
+  document.getElementById(
+    "checkIn1"
+  ).disabled = true;
+
+  document.getElementById(
+    "checkIn2"
+  ).disabled = true;
+
+
+  const checkedOut =
+    data.timeOut != null;
+
+
+  document.getElementById(
+    "checkOut1"
+  ).disabled =
+    checkedOut;
+
+  document.getElementById(
+    "checkOut2"
+  ).disabled =
+    checkedOut;
+
+}
+
+
+/* CHECK IN */
+
+async function checkIn() {
+
+  try {
+
+    const existing =
+      await getTodayRecord();
+
+
+    if (existing) {
+
+      alert(
+        "You already have a check-in record for today."
+      );
+
+      return;
+    }
+
+
+    const location =
+      await getSchoolLocation();
+
+
+    await addDoc(
+      collection(
+        db,
+        "attendance"
+      ),
+      {
+
+        teacherId:
+          currentUser.uid,
+
+        teacherEmail:
+          currentUser.email,
+
+        teacherName:
+          currentProfile.name ||
+          currentUser.email,
+
+        date:
+          getToday(),
+
+        timeIn:
+          serverTimestamp(),
+
+        timeOut:
+          null,
+
+        status:
+          "pending",
+
+        locationIn: {
+
+          latitude:
+            location.latitude,
+
+          longitude:
+            location.longitude,
+
+          accuracy:
+            location.accuracy,
+
+          distance:
+            location.distance
+
+        },
+
+        locationOut:
+          null,
+
+        approvedBy:
+          null,
+
+        approvedAt:
+          null
+
+      }
+    );
+
+
+    alert(
+      "Check-in successful. Your attendance is now awaiting approval."
+    );
+
+
+    await refreshDashboard();
+
+    await loadHistory();
+
+
+  } catch (error) {
+
+    alert(
+      error.message ||
+      String(error)
+    );
+
+  }
+
+}
+
+
+/* CHECK OUT */
+
+async function checkOut() {
+
+  try {
+
+    const record =
+      await getTodayRecord();
+
+
+    if (!record) {
+
+      alert(
+        "No check-in record found for today."
+      );
+
+      return;
+    }
+
+
+    if (record.data().timeOut) {
+
+      alert(
+        "You have already checked out."
+      );
+
+      return;
+    }
+
+
+    const location =
+      await getSchoolLocation();
+
+
+    await updateDoc(
+
+      doc(
+        db,
+        "attendance",
+        record.id
+      ),
+
+      {
+
+        timeOut:
+          serverTimestamp(),
+
+        locationOut: {
+
+          latitude:
+            location.latitude,
+
+          longitude:
+            location.longitude,
+
+          accuracy:
+            location.accuracy,
+
+          distance:
+            location.distance
+
+        }
+
+      }
+
+    );
+
+
+    alert(
+      "Check-out successful."
+    );
+
+
+    await refreshDashboard();
+
+    await loadHistory();
+
+
+  } catch (error) {
+
+    alert(
+      error.message ||
+      String(error)
+    );
+
+  }
+
+}
+
+
+/* HISTORY */
+
+async function loadHistory() {
+
+  const body =
+    document.getElementById(
+      "historyBody"
+    );
+
+
+  body.innerHTML =
+    "<tr><td colspan='4'>Loading...</td></tr>";
+
+
+  try {
+
+    const q =
+      query(
+        collection(
+          db,
+          "attendance"
+        ),
+
+        where(
+          "teacherId",
+          "==",
+          currentUser.uid
+        )
+      );
+
+
+    const snapshot =
+      await getDocs(q);
+
+
+    let records =
+      snapshot.docs.map(
+        item => item.data()
+      );
+
+
+    const selected =
+      document.getElementById(
+        "dateFilter"
+      ).value;
+
+
+    if (selected) {
+
+      records =
+        records.filter(
+          item =>
+            item.date === selected
+        );
+
+    }
+
+
+    records.sort(
+      (a, b) =>
+        (b.date || "").localeCompare(
+          a.date || ""
+        )
+    );
+
+
+    if (!records.length) {
+
+      body.innerHTML =
+        "<tr><td colspan='4'>No attendance records.</td></tr>";
+
+      return;
+    }
+
+
+    body.innerHTML =
+      records.map(
+        item => `
+
+        <tr>
+
+          <td>
+            ${item.date || "—"}
+          </td>
+
+          <td>
+            ${formatTime(item.timeIn)}
+          </td>
+
+          <td>
+            ${formatTime(item.timeOut)
+              </td>
+
+          <td>
+            ${item.status || "pending"}
+          </td>
+
+        </tr>
+
+        `
+      ).join("");
+
+
+    document.getElementById(
+      "approvedDays"
+    ).textContent =
+      records.filter(
+        item =>
+          item.status === "approved"
+      ).length;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    body.innerHTML =
+      "<tr><td colspan='4'>Unable to load history.</td></tr>";
+
+  }
+
+}
+
+
+/* ADMIN */
+
+async function loadAdmin() {
+
+  if (
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ) {
+
+    return;
+  }
+
+
+  const body =
+    document.getElementById(
+      "adminBody"
+    );
+
+
+  body.innerHTML =
+    "<tr><td colspan='6'>Loading...</td></tr>";
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "attendance"
+        )
+      );
+
+
+    let records =
+      snapshot.docs.map(
+        item => ({
+          id: item.id,
+          ...item.data()
+        })
+      );
+
+
+    document.getElementById(
+      "totalRecords"
+    ).textContent =
+      records.length;
+
+
+    document.getElementById(
+      "pendingRecords"
+    ).textContent =
+      records.filter(
+        item =>
+          item.status === "pending"
+      ).length;
+
+
+    document.getElementById(
+      "approvedRecords"
+    ).textContent =
+      records.filter(
+        item =>
+          item.status === "approved"
+      ).length;
+
+
+    document.getElementById(
+      "rejectedRecords"
+    ).textContent =
+      records.filter(
+        item =>
+          item.status === "rejected"
+      ).length;
+
+
+    const search =
+      document.getElementById(
+        "adminSearch"
+      ).value.toLowerCase();
+
+
+    const filter =
+      document.getElementById(
+        "statusFilter"
+      ).value;
+
+
+    records =
+      records.filter(
+        item => {
+
+          const name =
+            (
+              item.teacherName ||
+              item.teacherEmail ||
+              ""
+            ).toLowerCase();
+
+
+          const matchesSearch =
+            !search ||
+            name.includes(search);
+
+
+          const matchesStatus =
+            filter === "all" ||
+            item.status === filter;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+
+        }
+      );
+
+
+    if (!records.length) {
+
+      body.innerHTML =
+        "<tr><td colspan='6'>No records found.</td></tr>";
+
+      return;
+    }
+
+
+    body.innerHTML =
+      records.map(
+        item => {
+
+          let action = "—";
+
+
+          if (
+            item.status === "pending"
+          ) {
+
+            action = `
+
+              <button
+                class="primary approveButton"
+                data-id="${item.id}">
+                Approve
+              </button>
+
+              <button
+                class="primary rejectButton"
+                data-id="${item.id}">
+                Reject
+              </button>
+
+            `;
+
+          }
+
+
+          return `
+
+          <tr>
+
+            <td>
+              ${item.teacherName ||
+                item.teacherEmail ||
+                "Unknown"}
+            </td>
+
+            <td>
+              ${item.date || "—"}
+            </td>
+
+            <td>
+              ${formatTime(item.timeIn)}
+            </td>
+
+            <td>
+              ${formatTime(item.timeOut)}
+            </td>
+
+            <td>
+              ${item.status || "pending"}
+            </td>
+
+            <td>
+              ${action}
+            </td>
+
+          </tr>
+
+          `;
+
+        }
+      ).join("");
+
+
+    document
+      .querySelectorAll(
+        ".approveButton"
+      )
+      .forEach(
+        button => {
+
+          button.onclick =
+            () =>
+              approveAttendance(
+                button.dataset.id
+              );
+
+        }
+      );
+
+
+    document
+      .querySelectorAll(
+        ".rejectButton"
+      )
+      .forEach(
+        button => {
+
+          button.onclick =
+            () =>
+              rejectAttendance(
+                button.dataset.id
+              );
+
+        }
+      );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    body.innerHTML =
+      "<tr><td colspan='6'>Unable to load admin records.</td></tr>";
+
+  }
+
+}
+
+
+/* APPROVE */
+
+async function approveAttendance(id) {
+
+  if (
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ) {
+
+    return;
+  }
+
+
+  await updateDoc(
+
+    doc(
+      db,
+      "attendance",
+      id
+    ),
+
+    {
+
+      status:
+        "approved",
+
+      approvedBy:
+        currentUser.uid,
+
+      approvedAt:
+        serverTimestamp()
+
+    }
+
+  );
+
+
+  await loadAdmin();
+
+}
+
+
+/* REJECT */
+
+async function rejectAttendance(id) {
+
+  if (
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ) {
+
+    return;
+  }
+
+
+  const reason =
+    prompt(
+      "Enter the reason for rejection:"
+    );
+
+
+  if (reason === null) {
+    return;
+  }
+
+
+  await updateDoc(
+
+    doc(
+      db,
+      "attendance",
+      id
+    ),
+
+    {
+
+      status:
+        "rejected",
+
+      approvedBy:
+        currentUser.uid,
+
+      approvedAt:
+        serverTimestamp(),
+
+      rejectionReason:
+        reason
+
+    }
+
+  );
+
+
+  await loadAdmin();
+
+}
+
+
+/* NAVIGATION */
+
+document
+  .querySelectorAll(
+    ".navButton"
+  )
+  .forEach(
+    button => {
+
+      button.onclick =
+        () => {
+
+          document
+            .querySelectorAll(
+              ".navButton"
+            )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          document
+            .querySelectorAll(
+              ".page"
+            )
+            .forEach(
+              page =>
+                page.classList.remove(
+                  "active"
+                )
+            );
+
+
+          document
+            .getElementById(
+              button.dataset.page
+            )
+            .classList.add(
+              "active"
+            );
+
+
+          if (
+            button.dataset.page ===
+            "history"
+          ) {
+
+            loadHistory();
+
+          }
+
+
+          if (
+            button.dataset.page ===
+            "admin"
+          ) {
+
+            loadAdmin();
+
+          }
+
+        };
+
+    }
+  );
+
+
+/* LOGIN */
+
+document
+  .getElementById(
+    "loginButton"
+  )
+  .onclick =
+  async () => {
+
+    const email =
+      document
+        .getElementById(
+          "email"
+        )
+        .value.trim();
+
+
+    const password =
+      document
+        .getElementById(
+          "password"
+        )
+        .value;
+
+
+    const error =
+      document
+        .getElementById(
+          "errorMessage"
+        );
+
+
+    error.textContent =
+      "";
+
+
+    if (!email || !password) {
+
+      error.textContent =
+        "Enter your email and password.";
+
+      return;
+    }
+
+
+    const button =
+      document.getElementById(
+        "loginButton"
+      );
+
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Logging in...";
+
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    } catch (e) {
+
+      console.error(e);
+
+      error.textContent =
+        "Login failed: " +
+        e.message;
+
+    }
+
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Login";
+
+  };
+
+
+/* LOGOUT */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .onclick =
+  () =>
+    signOut(auth);
+
+
+/* ATTENDANCE BUTTONS */
+
+document
+  .getElementById(
+    "checkIn1"
+  )
+  .onclick =
+  checkIn;
+
+document
+  .getElementById(
+    "checkIn2"
+  )
+  .onclick =
+  checkIn;
+
+document
+  .getElementById(
+    "checkOut1"
+  )
+  .onclick =
+  checkOut;
+
+document
+  .getElementById(
+    "checkOut2"
+  )
+  .onclick =
+  checkOut;
+
+
+/* FILTERS */
+
+document
+  .getElementById(
+    "refreshHistory"
+  )
+  .onclick =
+  loadHistory;
+
+document
+  .getElementById(
+    "dateFilter"
+  )
+  .onchange =
+  loadHistory;
+
+document
+  .getElementById(
+    "refreshAdmin"
+  )
+  .onclick =
+  loadAdmin;
+
+document
+  .getElementById(
+    "adminSearch"
+  )
+  .oninput =
+  loadAdmin;
+
+document
+  .getElementById(
+    "statusFilter"
+  )
+  .onchange =
+  loadAdmin;
+
+
+/* AUTH STATE */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if (!user) {
+
+      currentUser =
+        null;
+
+      currentProfile =
+        null;
+
+      document
+        .getElementById(
+          "portal"
+        )
+        .classList.add(
+          "hidden"
+        );
+
+      document
+        .getElementById(
+          "loginPage"
+        )
+        .classList.remove(
+          "hidden"
+        );
+
+      return;
+    }
+
+
+    try {
+
+      currentUser =
+        user;
+
+
+      currentProfile =
+        await loadProfile(
+          user
+        );
+
+
+      document
+        .getElementById(
+          "loginPage"
+        )
+        .classList.add(
+          "hidden"
+        );
+
+
+      document
+        .getElementById(
+          "portal"
+        )
+        .classList.remove(
+          "hidden"
+        );
+
+
+      document
+        .getElementById(
+          "userEmail"
+        )
+        .textContent =
+        user.email;
+
+
+      document
+        .getElementById(
+          "welcome"
+        )
+        .textContent =
+        "Welcome, " +
+        (
+          currentProfile.name ||
+          user.email
+        );
+
+
+      document
+        .getElementById(
+          "dateText"
+        )
+        .textContent =
+        new Date()
+          .toLocaleDateString(
+            "en-KE",
+            {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            }
+          );
+
+
+      if (
+        currentProfile.role ===
+        "admin"
+      ) {
+
+        document
+          .getElementById(
+            "adminNav"
+          )
+          .classList.remove(
+            "hidden"
+          );
+
+      }
+
+
+      await refreshDashboard();
+
+      await loadHistory();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Unable to load your staff profile."
+      );
+
+      await signOut(auth);
+
+    }
+
+  }
+);
+
+</script>
+
+    </body>
+</html>
