@@ -1,329 +1,753 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAG Staff Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAG Staff Portal</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f2f7fa;
+    color: #333;
+}
+
+/* LOGIN */
+#loginPage {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #dff5ff, #ffffff);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    text-align: center;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #159bc5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.login-box h1 {
+    color: #08769b;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #159bc5;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #08769b;
+}
+
+.message {
+    margin-top: 15px;
+    color: #d33;
+    display: none;
+}
+
+.demo {
+    margin-top: 20px;
+    padding: 12px;
+    background: #eef8fc;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* DASHBOARD */
+#dashboard {
+    display: none;
+    min-height: 100vh;
+}
+
+.header {
+    background: #08769b;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header h2 {
+    font-size: 22px;
+}
+
+.logout {
+    background: white;
+    color: #08769b;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+.sidebar {
+    width: 230px;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 20px 10px;
+}
+
+.sidebar button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 14px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: #e4f6fc;
+    color: #08769b;
+    font-weight: bold;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.welcome {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.card h3 {
+    color: #08769b;
+    margin-bottom: 10px;
+}
+
+.number {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.panel h2 {
+    color: #08769b;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 13px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #eaf7fb;
+    color: #08769b;
+}
+
+.activity {
+    padding: 15px;
+    border-left: 4px solid #159bc5;
+    background: #f7fbfc;
+    margin-bottom: 12px;
+    border-radius: 5px;
+}
+
+.attendance-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #159bc5;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.attendance-status {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.profile-item {
+    padding: 15px;
+    background: #f5fafc;
+    border-radius: 8px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+    .layout {
+        flex-direction: column;
     }
 
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #eaf8ff, #ffffff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .sidebar {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
     }
 
-    .container {
-      width: 90%;
-      max-width: 420px;
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-      text-align: center;
+    .sidebar button {
+        min-width: 130px;
+        text-align: center;
     }
 
-    .logo {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      background: #42a5d5;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 28px;
-      font-weight: bold;
+    .cards {
+        grid-template-columns: 1fr;
     }
 
-    h1 {
-      color: #1675a8;
-      font-size: 25px;
-      margin-bottom: 5px;
+    .content {
+        padding: 15px;
     }
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 30px;
+    .profile-grid {
+        grid-template-columns: 1fr;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
+    .header {
+        padding: 15px;
     }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: #1675a8;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #105b83;
-    }
-
-    .footer {
-      margin-top: 25px;
-      font-size: 13px;
-      color: #888;
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<!-- LOGIN PAGE -->
+<div id="loginPage">
 
-    <div class="logo">SAG</div>
+    <div class="login-box">
 
-    <h1>SAG STAFF PORTAL</h1>
+        <div class="logo">SAG</div>
 
-    <p class="subtitle">
-      Senior Chief Adano Girls Senior School
-    </p>
+        <h1>SAG STAFF PORTAL</h1>
 
-    <input
-      type="text"
-      id="staffId"
-      placeholder="Enter Staff ID"
-    >
+        <p class="subtitle">
+            Senior Chief Adano Girls Senior School
+        </p>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter Password"
-    >
+        <input
+            id="staffId"
+            class="input"
+            type="text"
+            placeholder="Enter Staff ID"
+        >
 
-    <button onclick="login()">
-      LOGIN
-    </button>
+        <input
+            id="password"
+            class="input"
+            type="password"
+            placeholder="Enter Password"
+        >
 
-    <p class="footer">
-      Staff Management & Attendance System
-    </p>
+        <button class="login-btn" onclick="login()">
+            LOGIN
+        </button>
 
-  </div>
+        <p id="loginMessage" class="message"></p>
 
-  <script>
-    function login() {
-  const staffId = document.getElementById("staffId").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (staffId === "" || password === "") {
-    alert("Please enter your Staff ID and Password.");
-    return;
-  }
-
-  showDashboard(staffId);
-}
-
-function showDashboard(staffId) {
-  document.body.innerHTML = `
-    <style>
-      * {
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
-
-      body {
-        margin: 0;
-        background: #f2f9fc;
-        color: #333;
-      }
-
-      .dashboard {
-        min-height: 100vh;
-      }
-
-      .topbar {
-        background: #1675a8;
-        color: white;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .topbar h2 {
-        margin: 0;
-        font-size: 22px;
-      }
-
-      .logout {
-        background: white;
-        color: #1675a8;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-
-      .welcome {
-        padding: 25px;
-      }
-
-      .welcome h1 {
-        color: #1675a8;
-        margin-bottom: 5px;
-      }
-
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 18px;
-        padding: 0 25px 25px;
-      }
-
-      .card {
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      }
-
-      .card h3 {
-        color: #1675a8;
-        margin-top: 0;
-      }
-
-      .time {
-        font-size: 25px;
-        font-weight: bold;
-      }
-
-      .attendance {
-        text-align: center;
-      }
-
-      .sign-in,
-      .sign-out {
-        width: 100%;
-        padding: 15px;
-        border: none;
-        border-radius: 10px;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 10px;
-      }
-
-      .sign-in {
-        background: #168a55;
-      }
-
-      .sign-out {
-        background: #c0392b;
-      }
-
-      .status {
-        margin-top: 15px;
-        padding: 12px;
-        border-radius: 8px;
-        background: #eef6fa;
-      }
-    </style>
-
-    <div class="dashboard">
-
-      <div class="topbar">
-        <h2>SAG STAFF PORTAL</h2>
-        <button class="logout" onclick="location.reload()">LOGOUT</button>
-      </div>
-
-      <div class="welcome">
-        <h1>Welcome, Staff ${staffId}</h1>
-        <p>Senior Chief Adano Girls Senior School</p>
-      </div>
-
-      <div class="cards">
-
-        <div class="card">
-          <h3>📅 Today's Date</h3>
-          <p id="date"></p>
+        <div class="demo">
+            <strong>Demo Login</strong><br>
+            Staff ID: STAFF001<br>
+            Password: SAG2026
         </div>
-
-        <div class="card">
-          <h3>🕐 Current Time</h3>
-          <p class="time" id="clock"></p>
-        </div>
-
-        <div class="card attendance">
-          <h3>Attendance</h3>
-
-          <button class="sign-in" onclick="signIn()">
-            SIGN IN
-          </button>
-
-          <button class="sign-out" onclick="signOut()">
-            SIGN OUT
-          </button>
-
-          <div class="status" id="status">
-            Status: Not signed in
-          </div>
-        </div>
-
-      </div>
 
     </div>
-  `;
 
-  updateClock();
-  setInterval(updateClock, 1000);
+</div>
+
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+    <header class="header">
+
+        <h2>SAG Staff Portal</h2>
+
+        <button class="logout" onclick="logout()">
+            Logout
+        </button>
+
+    </header>
+
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <button class="active" onclick="showSection('home', this)">
+                🏠 Dashboard
+            </button>
+
+            <button onclick="showSection('staff', this)">
+                👥 Staff
+            </button>
+
+            <button onclick="showSection('attendance', this)">
+                📋 Attendance
+            </button>
+
+            <button onclick="showSection('activities', this)">
+                📅 Activities
+            </button>
+
+            <button onclick="showSection('profile', this)">
+                👤 My Profile
+            </button>
+
+        </aside>
+
+
+        <!-- CONTENT -->
+        <main class="content">
+
+
+            <!-- HOME -->
+            <section id="home" class="section active">
+
+                <div class="welcome">
+                    <h1>Welcome to SAG Staff Portal</h1>
+                    <p>
+                        Senior Chief Adano Girls Senior School
+                    </p>
+                </div>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <h3>Total Staff</h3>
+                        <div class="number">25</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Present Today</h3>
+                        <div class="number">22</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>School Activities</h3>
+                        <div class="number">8</div>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>Recent Activities</h2>
+
+                    <div class="activity">
+                        <strong>Staff Meeting</strong>
+                        <p>General staff meeting scheduled for Monday.</p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Academic Programme</strong>
+                        <p>Teachers to review the weekly academic programme.</p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Co-curricular Activities</strong>
+                        <p>Preparation for upcoming school competitions.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STAFF -->
+            <section id="staff" class="section">
+
+                <div class="panel">
+
+                    <h2>Staff Management</h2>
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Staff ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>STAFF001</td>
+                                <td>Staff Member 1</td>
+                                <td>Administration</td>
+                                <td>Active</td>
+                            </tr>
+
+                            <tr>
+                                <td>STAFF002</td>
+                                <td>Staff Member 2</td>
+                                <td>Teaching</td>
+                                <td>Active</td>
+                            </tr>
+
+                            <tr>
+                                <td>STAFF003</td>
+                                <td>Staff Member 3</td>
+                                <td>Teaching</td>
+                                <td>Active</td>
+                            </tr>
+
+                            <tr>
+                                <td>STAFF004</td>
+                                <td>Staff Member 4</td>
+                                <td>Support</td>
+                                <td>Active</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ATTENDANCE -->
+            <section id="attendance" class="section">
+
+                <div class="panel">
+
+                    <h2>Staff Attendance</h2>
+
+                    <p>
+                        Record your attendance for today.
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="attendance-btn"
+                        onclick="markAttendance()"
+                    >
+                        Mark Present
+                    </button>
+
+                    <p
+                        id="attendanceStatus"
+                        class="attendance-status"
+                    ></p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTIVITIES -->
+            <section id="activities" class="section">
+
+                <div class="panel">
+
+                    <h2>School Activities</h2>
+
+                    <div class="activity">
+                        <strong>Academic Activities</strong>
+                        <p>
+                            Teaching, assessments and academic programmes.
+                        </p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Music & Drama</strong>
+                        <p>
+                            Preparation and participation in school festivals.
+                        </p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Sports</strong>
+                        <p>
+                            School sports training and competitions.
+                        </p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Clubs & Societies</strong>
+                        <p>
+                            Student clubs and co-curricular programmes.
+                        </p>
+                    </div>
+
+                    <div class="activity">
+                        <strong>Staff Meetings</strong>
+                        <p>
+                            Staff meetings and departmental activities.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROFILE -->
+            <section id="profile" class="section">
+
+                <div class="panel">
+
+                    <h2>My Profile</h2>
+
+                    <div class="profile-grid">
+
+                        <div class="profile-item">
+                            <strong>Staff ID</strong>
+                            <p>STAFF001</p>
+                        </div>
+
+                        <div class="profile-item">
+                            <strong>Role</strong>
+                            <p>Staff Member</p>
+                        </div>
+
+                        <div class="profile-item">
+                            <strong>School</strong>
+                            <p>Senior Chief Adano Girls Senior School</p>
+                        </div>
+
+                        <div class="profile-item">
+                            <strong>Portal</strong>
+                            <p>SAG Staff Portal</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <div class="footer">
+                SAG Staff Management & Attendance System
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function login() {
+
+    const staffId =
+        document.getElementById("staffId").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    if (staffId === "" || password === "") {
+
+        message.textContent =
+            "Please enter your Staff ID and Password.";
+
+        message.style.display = "block";
+
+        return;
+    }
+
+
+    if (
+        staffId === "STAFF001" &&
+        password === "SAG2026"
+    ) {
+
+        document.getElementById("loginPage").style.display = "none";
+
+        document.getElementById("dashboard").style.display = "block";
+
+        message.style.display = "none";
+
+    } else {
+
+        message.textContent =
+            "Incorrect Staff ID or Password.";
+
+        message.style.display = "block";
+
+    }
+
 }
 
-function updateClock() {
-  const now = new Date();
 
-  const clock = document.getElementById("clock");
-  const date = document.getElementById("date");
+function logout() {
 
-  if (clock) {
-    clock.textContent = now.toLocaleTimeString();
-  }
+    document.getElementById("dashboard").style.display = "none";
 
-  if (date) {
-    date.textContent = now.toLocaleDateString();
-  }
+    document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("staffId").value = "";
+
+    document.getElementById("password").value = "";
+
 }
 
-function signIn() {
-  const now = new Date();
-  const status = document.getElementById("status");
 
-  status.textContent =
-    "Status: Signed in at " + now.toLocaleTimeString();
+function showSection(sectionId, button) {
 
-  status.style.background = "#e8f7ee";
+    const sections =
+        document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
+        section.classList.remove("active");
+    });
+
+
+    document
+        .getElementById(sectionId)
+        .classList.add("active");
+
+
+    const buttons =
+        document.querySelectorAll(".sidebar button");
+
+    buttons.forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+
+    button.classList.add("active");
+
 }
 
-function signOut() {
-  const now = new Date();
-  const status = document.getElementById("status");
 
-  status.textContent =
-    "Status: Signed out at " + now.toLocaleTimeString();
+function markAttendance() {
 
-  status.style.background = "#fdecea";
+    const status =
+        document.getElementById("attendanceStatus");
+
+    const now = new Date();
+
+    status.textContent =
+        "✓ Attendance marked successfully at " +
+        now.toLocaleTimeString();
+
+    status.style.color = "green";
+
 }
+
+</script>
+
+</body>
+</html>
